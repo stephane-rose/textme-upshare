@@ -51,6 +51,8 @@ nav a:hover{
 
 .centralpage{
     width: 700px;
-    height: 900px;
+    height: 800px;
+    margin:0 auto;
     background:#fff;
+    display:block;
 }

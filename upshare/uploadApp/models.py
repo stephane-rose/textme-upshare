@@ -15,6 +15,5 @@ class File(models.Model):
     url = models.URLField(max_length=200)
     shortlink = models.CharField(max_length=70)
     expiracy_date = models.DateTimeField()
-
     def __unicode(self):
         return self.url

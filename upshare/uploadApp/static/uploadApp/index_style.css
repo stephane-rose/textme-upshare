@@ -49,7 +49,7 @@ form{
   padding:6% 4%;
 }
 
-input[type="email"],input[type="password"]{
+input[type="username"],input[type="password"]{
   width:92%;
   background:#fff;
   margin-bottom:4%;
