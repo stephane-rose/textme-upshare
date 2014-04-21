@@ -17,26 +17,21 @@
       </nav>
     </header>
     
-    <form id="contactform">
-      <p class="contact"><label for="name">Name</label></p>
-      <input id="name" name="name" placeholder="First and last name" required="" tabindex="1" type="text">
+    <form id="contactform" action="/signup/" method="post">{% csrf_token %}
+      <p class="contact"><label for="name">First Name</label></p>
+      <input id="first_name" name="first_name" placeholder="First name" required="" tabindex="1" type="text">
+      <p class="contact"><label for="name">Last Name</label></p>
+      <input id="last_name" name="last_name" placeholder="Last name" required="" tabindex="1" type="text">
       <p class="contact"><label for="email">Email</label></p>
       <input id="email" name="email" placeholder="example@domain.com" required="" tabindex="2" type="email">
-      <p class="contact"><label for="username">Create a username</label></p>
+      <p class="contact"><label for="username">Username</label></p>
       <input id="username" name="username" placeholder="username" required="" tabindex="3" type="text">
-      <p class="contact"><label for="password">Create a password</label></p>
+      <p class="contact"><label for="password">Password</label></p>
       <input type="password" id="password" name="password" required="" tabindex="4" type="text">
-      <p class="contact"><label for="repassword">Confirm your password</label></p>
-      <input type="password" id="password" name="password" required="" tabindex="5" type="text">
-      <select class="select-style gender" name="gender" tabindex="9">
-	<option value="select">i am..</option>
-	<option value="m">Male</option>
-	<option value="f">Female</option>
-	<option value="others">Other</option>
-      </select><br><br>
-      <p class="contact"><label for="phone">Mobile phone</label></p>
-      <input id="phone" name="phone" placeholder="phone number" tabindex="10" required="" type="text"> <br>
-      <input class="buttom" name="submit" id="submit" tabindex="11" value="Sign me up!" type="submit">   
+      
+      <p class="contact"><label for="password_confirmation">Confirm your password</label></p>
+      <input type="password" id="password_confirmation" name="password_confirmation" required="" tabindex="5" type="text">
+           <input class="buttom" name="submit" id="submit" tabindex="11" value="Sign me up!" type="submit">   
     </form>
     <footer>
     </footer>

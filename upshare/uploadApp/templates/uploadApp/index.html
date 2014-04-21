@@ -20,9 +20,9 @@
     <section class="login">
       <div id="login">
 	<h1>Log in</h1>
-	<form>
-	<input type="email" name="username" placeholder="Email" method="post"/>
-	<input type="password" name="password" placeholder="Password" method="post"/>
+	<form id="signinform" action="/signin/" method="post">{% csrf_token %}
+	<input type="email" name=email" placeholder="Email"/>
+	<input type="password" name="password" placeholder="Password"/>
 	<input type="submit" value="Log in"/>
       </form>
       </div>
