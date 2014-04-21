@@ -1,0 +1,36 @@
+<!doctype html>
+
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'uploadApp/index_style.css' %}" />
+
+<head>
+  <meta charset="utf-8">
+  <title>Homepage</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="core">
+    <header>
+      <nav class = "menu">
+	<li><a href="/">Home</a></li>
+	<li><a href="/signup/">SignUp</a></li>
+      </nav>
+    </header>
+
+    <section class="login">
+      <div id="login">
+	<h1>Log in</h1>
+	<form>
+	<input type="email" name="username" placeholder="Email" method="post"/>
+	<input type="password" name="password" placeholder="Password" method="post"/>
+	<input type="submit" value="Log in"/>
+      </form>
+      </div>
+    </section>
+
+
+    <footer>
+    </footer>
+  </div>
+</body>
+</html>
