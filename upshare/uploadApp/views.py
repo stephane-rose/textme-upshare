@@ -32,14 +32,14 @@ def signup(request):
                                 username=request.POST.get('username'))
             user.set_password(request.POST.get('password'))
             user.save()
-            user = authenticate(email=request.POST.get('email'), password=request.POST.get('password'))
+            user = authenticate(username=request.POST.get('username'), password=request.POST.get('password'))
             if user:
                 login(request, user)
             return render(request, 'uploadApp/user.html')
 
 def signin(request):
     print request.POST
-    user = authenticate(email=request.POST.get('email'), password=request.POST.get('password'))
+    user = authenticate(username=request.POST.get('username'), password=request.POST.get('password'))
     if user:
         login(request, user)
         return HttpResponseRedirect('/')

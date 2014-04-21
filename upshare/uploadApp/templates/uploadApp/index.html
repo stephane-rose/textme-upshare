@@ -21,7 +21,7 @@
       <div id="login">
 	<h1>Log in</h1>
 	<form id="signinform" action="/signin/" method="post">{% csrf_token %}
-	<input type="email" name=email" placeholder="Email"/>
+	<input type="username" name="username" placeholder="Username"/>
 	<input type="password" name="password" placeholder="Password"/>
 	<input type="submit" value="Log in"/>
       </form>
