@@ -18,42 +18,31 @@
     </header>
 
     <section class="centralpage">
-      <aside class="dropzone">
-	<style>
-	  #holder.hover { border: 4px dashed #0c0 !important; }
-	</style>
-	<form method="post" action="/">
+      <aside class="awsfile">
+	<form action="/do_upload/" method="post">
 	  {% csrf_token %}
-	  <input type="file"></br>
-	  <input id="fileDragName"></br>
-	  <input id="fileDragSize"></br>
-	  <input id="fileDragType"></br>
-	  <input id="fileDragData">
-	  <div id="holder" style="width:200px; height:200px; border: 5px dashed #ccc" id="holder"></div>
-	  <input type="submit" value="Upload"/>
-	</form>
-	<script>
-	  function readfiles(files) {
-	  for (var i = 0; i < files.length; i++) {
-			      document.getElementById('fileDragName').value = files[i].name
-			      document.getElementById('fileDragSize').value = files[i].size
-			      document.getElementById('fileDragType').value = files[i].type
-			      document.getElementById('fileDragData').value = files[i].slice();
-			      reader = new FileReader();
-			      reader.onload = function(event) {
-			      document.getElementById('fileDragData').value = event.target.result;}
-			      reader.readAsDataURL(files[i]);
-			      }
-			      }
-			      var holder = document.getElementById('holder');
-			      holder.ondragover = function () { this.className = 'hover'; return false; };
-			      holder.ondragend = function () { this.className = ''; return false; };
-			      holder.ondrop = function (e) {
-			      this.className = '';
-			      e.preventDefault();
-			      readfiles(e.dataTransfer.files);
-			      } 
-			      </script>
+	  <!-- Include any additional input fields here -->
+	  
+	  <p class="File_to_upload">File to upload to S3:</p>
+	  </br>
+	  <input class="input_file" name="file" type="file" required=""></br>
+	  <label class="label_available" for="Available time">Available Time</label></br>
+	  <input class="input_available" name="time_available" type="number" placeholder="Available Time (Days)" required="">
+	  </br> 
+	  <input class="submit_button" type="submit" value="Upload File to S3"> 
+	</form> 	
+      </aside>
+      <aside class="files">
+	<p class="file_title">
+	  List of uploaded files
+	</p>
+	<ul class="file_list">
+	  <li><a href="/">file1</a></li>
+	  <li><a href="/">file2</a></li>
+	  <li><a href="/">file3</a></li>
+	  <li><a href="/">file4</a></li>
+	</ul>
+	</nav>
       </aside>
     </section>
     

@@ -19,15 +19,14 @@
     <section class="login">
       <div id="login">
 	<h1>Log in</h1>
-	<form id="signinform" action="/signin/" method="post">{% csrf_token %}
+	<form id="signinform" action="/signin/" method="post">
+	  {% csrf_token %}
 	<input type="username" name="username" placeholder="Username"/>
 	<input type="password" name="password" placeholder="Password"/>
 	<input type="submit" value="Log in"/>
       </form>
       </div>
     </section>
-
-
     <footer>
     </footer>
   </div>
