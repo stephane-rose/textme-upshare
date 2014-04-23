@@ -19,10 +19,8 @@
 
     <section class="centralpage">
       <aside class="awsfile">
-	<form action="/do_upload/" method="post">
+	<form enctype="multipart/form-data" action="/do_upload/" method="post">
 	  {% csrf_token %}
-	  <!-- Include any additional input fields here -->
-	  
 	  <p class="File_to_upload">File to upload to S3:</p>
 	  </br>
 	  <input class="input_file" name="file" type="file" required=""></br>
@@ -37,10 +35,12 @@
 	  List of uploaded files
 	</p>
 	<ul class="file_list">
-	  <li><a href="/">file1</a></li>
-	  <li><a href="/">file2</a></li>
-	  <li><a href="/">file3</a></li>
-	  <li><a href="/">file4</a></li>
+	  {% if list_files %}
+	  {% for file in list_files %}
+	  <li><a href={{file.shortlink}}>{{file.file_name}}</a></li>
+	  {% endfor %}
+	  
+	  {% endif %}
 	</ul>
 	</nav>
       </aside>

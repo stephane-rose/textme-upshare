@@ -25,6 +25,9 @@
 	<input type="password" name="password" placeholder="Password"/>
 	<input type="submit" value="Log in"/>
       </form>
+	{% if bad_login %}
+	<label class="error_login">bad login/mdp</label>
+	{% endif %}
       </div>
     </section>
     <footer>

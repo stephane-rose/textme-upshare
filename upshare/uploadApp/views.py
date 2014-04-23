@@ -11,6 +11,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth import login
 from django.contrib.auth import logout as Logout
 from django.http import HttpResponseRedirect
+from django.conf import settings
 
 from django import forms
 import boto.s3
@@ -20,7 +21,8 @@ from boto.s3.key import Key
 
 def index(request):
     if request.user.is_authenticated():
-        return render(request, 'uploadApp/user.html')
+        list_files = request.user.myfile_set.all()
+        return render(request, 'uploadApp/user.html', {'list_files' : list_files})
     return render(request, 'uploadApp/index.html')
 
 def signup(request):
@@ -45,8 +47,8 @@ def signin(request):
         login(request, user)
         return HttpResponseRedirect('/')
     else:
-        print "ENVOIE BAD LOGIN"
-        return render(request, 'uploadApp/index.html', {'bad_login' : "true"})
+        bad_login = True
+        return render(request, 'uploadApp/index.html', {'bad_login' : bad_login})
 
 def logout(request):
     Logout(request)
@@ -54,35 +56,29 @@ def logout(request):
 
 # upload / boto / Aws
 
-AWS_ACCESS_KEY_ID = 'AKIAI36GFMLSGYHNNLUA'
-AWS_SECRET_ACCESS_KEY = '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'
-
 def upload_boto(request):
+    list_files = request.user.myfile_set.all()
     if request.method == 'POST':
-        bucket_name = AWS_ACCESS_KEY_ID.lower() + '-media'
-        conn = boto.connect_s3(AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY)
-    
+        conn = boto.connect_s3(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY)
+        
         bucket = conn.get_bucket('textme-srose')
-        #print "BUCKET_GET = ", bucket
-        testfile = '/home/mystte/tux.png'
-        print 'Uploading %s to Amazon S3 bucket %s' % (testfile, bucket_name)
         def percent_cb(complete, total):
-            print '.'
-        k = Key(bucket)
-        k.key = 'tux.png'
-        url = k.generate_url(240 * 86400, method='GET')
-        print "URL = ", url
-        if (k.set_contents_from_filename(testfile, cb=percent_cb, num_cb=10) != 0 and
-            request.POST.get('time_available') > 0):
-            print "file_name", request.POST.get('file')
-            newFile = MyFile.objects.create(file_name=request.POST.get('file'),
-                                user = request.user,
-                                shortlink = url)
-            print "FIIIILE NAME = ", newFile.file_name
-            newFile.save()
-            print "ON VA DANS LE SUCCESS"
-            return render(request, 'uploadApp/uploadsuccess.html')
-    return render(request, 'uploadApp/user.html')
+            print complete
+        media_key = "media/" + request.user.username + "/" + request.FILES['file'].name
+        if not bucket.get_key(media_key):
+            k = bucket.new_key("media/" + request.user.username + "/" + request.FILES['file'].name)
+            k.set_metadata('Content-Type', request.FILES['file'].content_type)
+            k.set_metadata('Cache-Control', 'max-age=864000')
+            if (k.set_contents_from_string(request.FILES['file'].read(), cb=percent_cb, num_cb=10) != 0 and request.POST.get('time_available') > 0):
+                url = k.generate_url(int(request.POST.get('time_available')) * 86400, method='GET')
+                k.make_public()
+                urlTmp = "https://textme-srose.s3.amazonaws.com/media/" + request.user.username + "/" + request.FILES['file'].name
+                newFile = MyFile.objects.create(file_name=request.FILES['file'], 
+                                                user = request.user, shortlink = urlTmp)
+                newFile.save()
+                return render(request, 'uploadApp/uploadsuccess.html')
+    return render(request, 'uploadApp/user.html', {'list_files' : list_files})
+
 
 def success(request):
     return HttpResponse("YIPEEEEE")

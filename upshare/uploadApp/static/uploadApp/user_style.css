@@ -93,6 +93,18 @@ nav a:hover{
     margin-left: 20px;
 }
 
-.file_list{
+.file_list {
+    width:320px;
     margin: 50px;
+}
+.file_list ol {
+    font-style:italic; font-family:Georgia, Times, serif; font-size:24px; color:#bfe1f1;
+}
+.file_list ol li{
+}
+.file_list ol li p
+{ padding:8px; font-style:normal; font-family:Arial; font-size:13px; color:#eee; border-left: 1px solid #999;
+}
+.file_list ol li p em{
+    display:block;
 }
