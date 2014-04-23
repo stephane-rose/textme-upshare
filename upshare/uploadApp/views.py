@@ -64,16 +64,19 @@ def upload_boto(request):
         bucket = conn.get_bucket('textme-srose')
         def percent_cb(complete, total):
             print complete
-        media_key = "media/" + request.user.username + "/" + request.FILES['file'].name
+        epur_file_name = request.FILES['file'].name.replace(' ', '_')
+        media_key = "media/" + request.user.username + "/" + epur_file_name
         if not bucket.get_key(media_key):
-            k = bucket.new_key("media/" + request.user.username + "/" + request.FILES['file'].name)
+            k = bucket.new_key("media/" + request.user.username + "/" + epur_file_name)
             k.set_metadata('Content-Type', request.FILES['file'].content_type)
             k.set_metadata('Cache-Control', 'max-age=864000')
             if (k.set_contents_from_string(request.FILES['file'].read(), cb=percent_cb, num_cb=10) != 0 and request.POST.get('time_available') > 0):
                 url = k.generate_url(int(request.POST.get('time_available')) * 86400, method='GET')
                 k.make_public()
                 urlTmp = "https://textme-srose.s3.amazonaws.com/media/" + request.user.username + "/" + request.FILES['file'].name
-                newFile = MyFile.objects.create(file_name=request.FILES['file'], 
+                urlTmp = urlTmp.replace(' ', '_')
+                print urlTmp
+                newFile = MyFile.objects.create(file_name=epur_file_name, 
                                                 user = request.user, shortlink = urlTmp)
                 newFile.save()
                 return render(request, 'uploadApp/uploadsuccess.html')
